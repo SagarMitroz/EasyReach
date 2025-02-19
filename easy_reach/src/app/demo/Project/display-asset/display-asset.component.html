@@ -1,0 +1,40 @@
+<div class="row">
+    
+    
+    <div class="col-md-12 col-xl-12">
+      <h5 class="mb-3">Location > {{ locationDetails.locationName }} > {{ locationDetails.areaName }}</h5>
+      <div class="card tbl-card">
+        <div class="table-responsive">
+            
+          <table class="table table-hover mb-0 " >
+            <thead >
+              <tr >
+                <th style="background-color: #4398d3;color:white">ASSETS MAC</th>
+                <th style="background-color: #4398d3;color:white">LAST SEEN</th>
+                <th style="background-color: #4398d3;color:white">TYPE</th>
+                <th style="background-color: #4398d3;color:white">SINCE</th>
+                <th style="background-color: #4398d3;color:white">DATA</th>
+                <th style="background-color: #4398d3;color:white">NAME</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let asset of assetList"(click)="goToMovement(asset.assetId,asset.lastUpdateOn)" 
+                style="cursor: pointer;">
+                    <td>{{ asset.macId }}</td>
+                    <td>{{ getTimeDifference (asset.lastUpdateOn) }}</td>
+                    <td>{{ asset.assetType }}</td>
+                    <td>{{ getTimeDifference (asset.lastUpdateOn)  }}</td>
+                    <td>{{ asset.data }}</td>
+                    <td>{{ asset.assetName }}</td>
+                  </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+   
+ 
+    <!-- [ sample-page ] end -->
+  </div>
+  

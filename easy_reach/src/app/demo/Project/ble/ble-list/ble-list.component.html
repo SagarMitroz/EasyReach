@@ -1,0 +1,113 @@
+<div class="col-md-12 col-xl-12">
+    <h5 class="mt-3">BLE List</h5>
+    <div class="d-flex align-items-end ms-auto">
+
+      <div class="input-group w-25">
+
+          <input class="input-simple" type="text" placeholder="Search" [(ngModel)]="searchText">
+      </div>
+
+  </div>
+    
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 " >
+          <thead >
+            <tr >
+              <th style="background-color: #4398d3;color:white">NAME</th>
+              <th style="background-color: #4398d3;color:white">MAC</th>
+             
+              <th style="background-color: #4398d3;color:white">SCANNER/DEVICE</th>
+              <th style="background-color: #4398d3;color:white">TYPE</th>
+             
+              <th style="background-color: #4398d3;color:white">DATE</th>
+              <th style="background-color: #4398d3;color:white">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let device of paginatedDevices">
+              <td>{{ device.deviceName }}</td>
+              <td>{{ device.macId }}</td>
+              <td>{{ device.deviceType.deviceType }}</td>
+              <td>{{ device.deviceType.sensor }}</td>
+              <td>{{ device.createdOn  | date: 'dd/MM/yyyy' }}</td>
+              <td>
+                <i class="bi bi-pencil-square" (click)="openModal(device, editModal)"></i>&nbsp;&nbsp;&nbsp;
+                <i class="bi bi-trash text-danger"></i>
+              </td>
+            </tr>
+               
+          </tbody>
+        </table>
+        
+      </div>
+      <div style="    margin-top: 10px;">
+        <nav aria-label="Device pagination mt-5">
+          <ul class="pagination justify-content-end">
+            <!-- Previous Button -->
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1">
+                Previous
+              </button>
+            </li>
+        
+            <!-- Page Numbers -->
+            <li 
+              *ngFor="let page of getPaginationNumbers()" 
+              class="page-item" 
+              [class.active]="page === currentPage"
+            >
+              <button class="page-link" (click)="goToPage(page)">
+                {{ page }}
+              </button>
+            </li>
+        
+            <!-- Next Button -->
+            <li class="page-item" [class.disabled]="currentPage >= totalPages">
+              <button class="page-link" (click)="nextPage()" [disabled]="currentPage >= totalPages">
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+        
+      </div>
+      
+    
+  </div>
+ 
+  
+  
+  <ng-template #editModal let-modal>
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update BLE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+   
+    <div class="modal-body">
+      <form #deviceForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="deviceName" class="form-label">Device Name</label>
+              <input type="text" id="deviceName" class="form-control" [(ngModel)]="selectedDevice.deviceName" name="deviceName" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="macId" class="form-label">MAC ID</label>
+              <input type="text" id="macId" class="form-control" [(ngModel)]="selectedDevice.macId" name="macId" required>
+            </div>
+          </div>
+        </div>
+        
+       
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">Update</button>
+    </div>
+  </div>
+  </ng-template>

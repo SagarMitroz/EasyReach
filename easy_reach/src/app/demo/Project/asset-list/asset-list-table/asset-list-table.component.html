@@ -1,0 +1,98 @@
+<div class="col-md-12 col-xl-12">
+    <h5 class="mt-3">Assets List</h5>
+    <div class="input-group w-25">
+
+      <input class="input-simple" type="text" placeholder="Search" [(ngModel)]="searchText">
+  </div>
+      <div class="table-responsive" >
+        <table class="table table-hover mb-0 " >
+          <thead >
+            <tr >
+              <th style="background-color: #4398d3;color:white">NAME</th>
+              <th style="background-color: #4398d3;color:white">Asset Code</th>
+              <th style="background-color: #4398d3;color:white">BLE</th>
+              <th style="background-color: #4398d3;color:white">Campus Name</th>
+              <th style="background-color: #4398d3;color:white">Created </th>
+              <th style="background-color: #4398d3;color:white">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+           <tr *ngFor="let device of filteredDevices">
+            <td>{{ device.assetName }}</td>
+            <td>{{ device.assetId }}</td>
+            <td>{{ device.deviceTypeId === 5 ? 'BLE' : device.deviceTypeId === 6 ? 'BLE-Scanner' : device.deviceTypeId }}</td>
+            <td>{{ device.busUnitName }}</td>
+            <td>{{ device.createdOn }}</td>
+            <td> <i class="bi bi-pencil-square" (click)="openModal(device, editModal)"></i>&nbsp;&nbsp;&nbsp;<i class="bi bi-trash text-danger"></i></td>
+           </tr>
+            
+          </tbody>
+        </table>
+      </div>
+   
+  </div>
+
+
+  <ng-template #editModal let-modal>
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update BLE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+   
+    <div class="modal-body">
+      <form #deviceForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="deviceName" class="form-label">Device Name</label>
+              <input type="text" id="deviceName" class="form-control" [(ngModel)]="selectedDevice.assetName" name="deviceName" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="macId" class="form-label">BLE Type</label>
+              <input type="text" id="macId" class="form-control"    [ngModel]="getDeviceTypeLabel(selectedDevice.deviceTypeId)"  name="macId" required>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+                
+            <label class="form-label" for="firstName">Campus</label>
+                <div class="ng-autocomplete">
+                  <ng-autocomplete
+                    [data]="countries"
+                    [(ngModel)]="keyword" 
+                    [searchKeyword]="keyword"
+                    placeholder="Select Location"
+                    (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)'
+                    (inputFocused)='onFocused($event)'
+                    historyIdentifier="countries"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+                
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+                
+
+          </div>
+        </div>
+        
+       
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('cancel')">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="saveChanges(modal)">Update</button>
+    </div>
+  </div>
+  </ng-template>

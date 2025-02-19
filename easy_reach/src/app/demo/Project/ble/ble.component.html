@@ -1,0 +1,167 @@
+<div class="row">
+  <h5 class="mt-3">Add new BLE </h5>
+  <div>
+    <!-- Tab Buttons -->
+    <button *ngFor="let tab of tabs" class="tablink" (click)="openPage(tab.name)"
+      [style.backgroundColor]="activeTab === tab.name ? '#ebf5fc' : ''">
+      {{ tab.name }}
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div *ngFor="let tab of tabs" style="margin-top: -10px;">
+    <div [id]="tab.name" class="tabcontent tcard" *ngIf="activeTab === tab.name">
+      <ng-container [ngSwitch]="tab.name">
+        <!-- Scanner Tab -->
+        <div *ngSwitchCase="'Scanner'">
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="firstName">Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Enter Name"
+                    [(ngModel)]="scannerData.firstName" name="scannerFirstName" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="macAddress">Mac Address</label>
+                  <input type="text" class="form-control" id="macAddress" placeholder="Enter mac id"
+                    [(ngModel)]="scannerData.macAddress" name="scannerMacAddress" />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                
+                <label class="form-label" for="firstName">Location</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="countries"
+                        [searchKeyword]="keyword"
+                        placeholder="Select Location"
+                        (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)'
+                        historyIdentifier="countries"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                    
+
+              </div>
+              <div class="col-md-6">
+                
+                <label class="form-label" for="firstName">Area</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                      [data]="areas"
+                      [searchKeyword]="keyword1"
+                      placeholder="Select Area"
+                      (selected)='selectEvent1($event)'
+                      (inputChanged)='onChangeSearch1($event)'
+                      (inputFocused)='onFocused1($event)'
+                      historyIdentifier="areas"
+                      [itemTemplate]="itemTemplate1"
+                      [notFoundTemplate]="notFoundTemplate1">
+                    </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate1 let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate1 let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                    
+
+              </div>
+              
+              <div class="col-md-6 ">
+                <div class="form-group mb-3">
+                  <label class="form-label">Location Type</label>
+                  <div class="d-flex gap-5" style="margin-top: 10px;">
+                    <label>
+                      <input class="form-check-input" type="radio" name="scannerLocationType" value="Static"
+                        [(ngModel)]="scannerData.locationType" /> Static
+                    </label>
+                    <label>
+                      <input class="form-check-input" type="radio" name="scannerLocationType" value="Moving"
+                        [(ngModel)]="scannerData.locationType" /> Moving
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
+                <button type="button" class="btn btn-primary" (click)="saveForm('Scanner')"
+                  style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Device Tab -->
+        <div *ngSwitchCase="'Device'">
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="firstName">Device Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="Enter Name"
+                    [(ngModel)]="deviceData.firstName" name="deviceFirstName" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="macAddress">Mac Address</label>
+                  <input type="text" class="form-control" id="macAddress" placeholder="Enter mac id"
+                    [(ngModel)]="deviceData.macAddress" name="deviceMacAddress" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <label class="form-label">Sensor Type</label>
+                  <div class="d-flex gap-5" style="margin-top: 10px;">
+                    <label>
+                      <input class="form-check-input" type="radio" name="deviceLocationType" value="Vanilla"
+                        [(ngModel)]="deviceData.locationType" /> Vanilla
+                    </label>
+                    <label>
+                      <input class="form-check-input" type="radio" name="deviceLocationType" value="Temperature"
+                        [(ngModel)]="deviceData.locationType" /> Temperature
+                    </label>
+                    <label>
+                      <input class="form-check-input" type="radio" name="deviceLocationType"
+                        value="TemperatureAcceleration" [(ngModel)]="deviceData.locationType" /> Temperature+
+                      Acceleration
+                    </label>
+                    <label>
+                      <input class="form-check-input" type="radio" name="deviceLocationType" value="Advance"
+                        [(ngModel)]="deviceData.locationType" /> Advance
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
+                <button type="button" class="btn btn-primary" (click)="saveForm('Device')"
+                  style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <app-ble-list />
+</div>

@@ -1,0 +1,78 @@
+.dual-list {
+    display: flex;
+   
+   
+  }
+
+  .dual-list > * {
+    margin-right: 10px; /* Add space between elements */
+}
+  
+  .list-container {
+   
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    cursor: pointer;
+    padding: 2px;
+    margin: 3px;
+   
+    border: 1px solid #ddd;
+  }
+  
+  li:hover {
+    background-color: #f0f0f0;
+  }
+
+  .form{
+
+    position: relative;
+}
+
+.form  .bi-search{
+
+    position: absolute;
+    top:8px;
+    left: 20px;
+    color: #9ca3af;
+
+}
+
+.form span{
+
+        position: absolute;
+    right: 17px;
+    top: 10px;
+    padding: 2px;
+   // border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+    padding-left: 7px;
+}
+
+.left-pan i{
+   
+   padding-left: 10px;
+}
+
+.form-input{
+
+    height: 40px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+.form-input:focus{
+
+    box-shadow: none;
+    border:none;
+}

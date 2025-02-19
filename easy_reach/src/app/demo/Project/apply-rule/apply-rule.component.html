@@ -1,0 +1,171 @@
+<div class="row">
+    <h5 class="mt-3">Apply Rule </h5>
+    <div class="col-md-6">
+        <div class="form-group mb-3">
+            <label class="form-label" for="firstName">Select Rule</label>
+            <select class="form-control" id="userType">
+                <option value="" disabled selected>Select a rule</option>
+                <option value="admin">Rule 1</option>
+                <option value="editor">Temp 1</option>
+                <option value="viewer">ACCl 1</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group mb-3">
+            <label class="form-label" for="firstName">Apply On</label>
+
+            <select class="form-control" [(ngModel)]="selectedType">
+                <option value="temp">All locations</option>
+                <option value="location">On selected main locations</option>
+                <option value="accl1">On selected regions</option>
+                <option value="accl2">On selected location areas</option>
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+        <!-- Card for All Options -->
+        <div *ngIf="selectedType === 'temp'" class="card" style="border: none;">
+            <label class="form-label">All Locations</label>
+            <div class="dual-list">
+                <div class="list-container">
+                    <label class="form-label" for="firstName">All Locations</label>
+                    <!-- Search Input for First List -->
+                    <input type="text" [(ngModel)]="searchQueryA" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of filteredLocA" (click)="addToListB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Add All Button -->
+                    <button class="btn btn-primary" (click)="addAllToListB()">Add All</button>
+                </div>
+
+                <div class="list-container">
+                    <label class="form-label" for="firstName">Selected Locations</label>
+                    <!-- Search Input for Second List -->
+                    <input type="text" [(ngModel)]="searchQueryB" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of locB" (click)="removeFromListB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Remove All Button -->
+                    <button class="btn btn-danger" (click)="removeAllFromListB()">Remove All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card for Location -->
+        <div *ngIf="selectedType === 'location'" class="card" style="border: none;">
+            <label class="form-label">On Select Main Location</label>
+            <div class="dual-list">
+                <div class="list-container">
+                    <label class="form-label" for="firstName">All Main Locations</label>
+                    <!-- Search Input for First List -->
+                    <input type="text" [(ngModel)]="searchQueryA" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of filteredListA" (click)="addToListB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Add All Button -->
+                    <button class="btn btn-primary" (click)="addAllToListB()">Add All</button>
+                </div>
+
+                <div class="list-container">
+                    <label class="form-label" for="firstName">Selected Main Locations</label>
+                    <!-- Search Input for Second List -->
+                    <input type="text" [(ngModel)]="searchQueryB" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of listB" (click)="removeFromListB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Remove All Button -->
+                    <button class="btn btn-danger" (click)="removeAllFromListB()">Remove All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card for Regions -->
+        <div *ngIf="selectedType === 'accl1'" class="card" style="border: none;">
+            <label class="form-label">On Selected Regions</label>
+            <div class="dual-list">
+                <div class="list-container">
+                    <label class="form-label" for="firstName">All Regions</label>
+                    <!-- Search Input for First List -->
+                    <input type="text" [(ngModel)]="searchQueryA" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of filteredRegA" (click)="addToregB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Add All Button -->
+                    <button class="btn btn-primary" (click)="addAllToRegB()">Add All</button>
+                </div>
+
+                <div class="list-container">
+                    <label class="form-label" for="firstName">Selected Regions</label>
+                    <!-- Search Input for Second List -->
+                    <input type="text" [(ngModel)]="searchQueryB" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of regB" (click)="removeFromregB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Remove All Button -->
+                    <button class="btn btn-danger" (click)="removeAllFromRegB()">Remove All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card for Areas -->
+        <div *ngIf="selectedType === 'accl2'" class="card" style="border: none;">
+            <label class="form-label">On Selected Areas</label>
+            <div class="dual-list">
+                <div class="list-container">
+                    <label class="form-label" for="firstName">All Location Areas</label>
+                    <!-- Search Input for First List -->
+                    <input type="text" [(ngModel)]="searchQueryA" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of filteredAreaA" (click)="addToAreaB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Add All Button -->
+                    <button class="btn btn-primary" (click)="addAllToAreaB()">Add All</button>
+                </div>
+
+                <div class="list-container">
+                    <label class="form-label" for="firstName">Selected Location Areas</label>
+                    <!-- Search Input for Second List -->
+                    <input type="text" [(ngModel)]="searchQueryB" placeholder="Search..." class="form-control">
+                    <ul>
+                        <li *ngFor="let item of areaB" (click)="removeFromAreaB(item)">
+                            {{ item }}
+                        </li>
+                    </ul>
+                    <!-- Remove All Button -->
+                    <button class="btn btn-danger" (click)="removeAllFromAreaB()">Remove All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
+        <button type="button" class="btn btn-primary"
+            style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
+    </div>
+
+
+
+
+</div>

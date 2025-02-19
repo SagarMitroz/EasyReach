@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-12 col-xl-12">
+        <h5 class="mb-3">Location Dashboard</h5>
+    
+       <div class="row">
+        
+        <div class="col-sm-2">
+            <button class="btn btn-primary" (click)="toggleFilterCard($event)">
+              Filter <i class="bi bi-funnel" style="font-size: 14px;"></i>
+            </button>
+          
+            <div *ngIf="showFilterCard" class="filter-card" 
+                 style="top: 100px; left: 46px; position: absolute; z-index: 1000;">
+              
+              <div class="dropdown-container">
+                <label for="dropdown1">Region</label>
+                <select id="dropdown1">
+                  <option value="option1">Mumbai</option>
+                  <option value="option2">Pune</option>
+                </select>
+              </div>
+          
+              <div class="dropdown-container">
+                <label for="dropdown2">Area</label>
+                <select id="dropdown2">
+                  <option value="option1">PCMC</option>
+                  <option value="option2">Pune</option>
+                </select>
+              </div>
+          
+              <!-- <button class="btn btn-sm" (click)="toggleFilterCard($event)">Close</button> -->
+              <!-- <button class="btn btn-sm btn-primary">Apply</button> -->
+            </div>
+          </div>
+          
+
+
+
+        <div class="col-sm-3">
+            <input  id="daterange" type="text" placeholder="Select Date" style="margin-left: -50px;height: 34px;">
+        </div>
+        <div class="col-sm-7" style="display: flex;
+            align-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            align-items: baseline;">
+            <button class="btn btn-primary" >Download <i class="bi bi-download" style="font-size: 14px;"></i></button>
+        </div>
+       </div>
+    </div>
+
+    <div class="row" style="margin-top: 1%;">
+        <div class="col-lg-6" >
+            <app-pie-chart/>
+        </div>
+        <div class="col-lg-6" style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+            <app-bar-chart/>
+        </div>
+     
+       
+    </div>
+    <div class="row" style="margin-top: 1%;">
+        <div class="col-lg-6" >
+            <app-missing-barchart/>
+        </div>
+        <div class="col-lg-6" style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+            <app-line-chart/>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 1%;">
+        <div class="col-lg-6" >
+            <app-efficiency-chart/>
+        </div>
+        
+     
+       
+    </div>
+</div>

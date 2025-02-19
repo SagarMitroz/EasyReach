@@ -1,0 +1,139 @@
+.tablink {
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  background-color: lightgray;
+  margin-right: 5px;
+}
+
+.tabcontent {
+  padding: 20px;
+ 
+ 
+ border-bottom-right-radius: 10px;
+  display: none;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mrow{
+  border-bottom-right-radius: 10px;   
+   border-bottom-left-radius: 10px;
+   border-top-right-radius: 10px;
+
+}
+
+.column {
+  flex: 20%;
+  max-width: 20%;
+  padding: 10px;
+}
+
+.card {
+  background-color: #63c1ff;
+  padding: 2px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+.row1 {
+  display: flex;
+  align-items: center; /* Align vertically */
+  gap: 10px; /* Space between items */
+  padding: 5px 0;
+}
+
+.vl {
+  border-left: 3px solid green; /* Default color for the vertical line */
+  height: 55px; /* Adjust height as needed */
+  margin-right: 10px; /* Space between line and text */
+  transition: border-left-color 0.3s ease; /* Smooth transition for color changes */
+}
+
+.card-header {
+  font-weight: bold;
+   /* Customize the header background */
+  color: white;
+   padding: 10px;
+ // border-radius: 5px 5px 0 0; /* Rounded corners for the header */
+}
+
+
+
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Vertically center-align content */
+}
+
+.header-left {
+  font-weight: bold;
+  color: white;
+}
+
+
+
+
+// Search bar
+
+
+.form{
+
+    position: relative;
+}
+
+.form  .bi-search{
+
+    position: absolute;
+    top:8px;
+    left: 20px;
+    color: #9ca3af;
+
+}
+
+.form span{
+
+        position: absolute;
+    right: 17px;
+    top: 10px;
+    padding: 2px;
+   // border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+    padding-left: 7px;
+}
+
+.left-pan i{
+   
+   padding-left: 10px;
+}
+
+.form-input{
+
+    height: 33px;
+    text-indent: 35px;
+    border-radius: 10px;
+}
+
+.form-input:focus{
+
+    box-shadow: none;
+    border:none;
+}

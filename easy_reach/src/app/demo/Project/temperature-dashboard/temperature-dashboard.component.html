@@ -1,0 +1,220 @@
+<div class="row" >
+
+    <div class="col-md-12 col-xl-12">
+        <h5 class="mb-3"> Dashboard</h5>
+    
+       <div class="row">
+        
+        <div class="col-sm-2">
+            <button class="btn btn-primary" (click)="toggleFilterCard($event)">
+              Filter <i class="bi bi-funnel" style="font-size: 14px;"></i>
+            </button>
+          
+            <div *ngIf="showFilterCard" class="filter-card" 
+                 style="top: 100px; left: 46px; position: absolute; z-index: 1000;">
+              
+              <div class="dropdown-container">
+                <label for="dropdown1">Region</label>
+                <select id="dropdown1">
+                  <option value="option1">Mumbai</option>
+                  <option value="option2">Pune</option>
+                </select>
+              </div>
+          
+              <div class="dropdown-container">
+                <label for="dropdown2">Area</label>
+                <select id="dropdown2">
+                  <option value="option1">PCMC</option>
+                  <option value="option2">Pune</option>
+                </select>
+              </div>
+          
+              <!-- <button class="btn btn-sm" (click)="toggleFilterCard($event)">Close</button> -->
+              <!-- <button class="btn btn-sm btn-primary">Apply</button> -->
+            </div>
+          </div>
+          
+
+
+
+        <div class="col-sm-3">
+            <input  id="daterange" type="text" placeholder="Select Date" style="margin-left: -50px;height: 34px;">
+        </div>
+        <div class="col-sm-7" style="display: flex;
+            align-content: space-around;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            align-items: baseline;">
+            <button class="btn btn-primary" >Download <i class="bi bi-download" style="font-size: 14px;"></i></button>
+        </div>
+       </div>
+    
+            <div class="row" style="margin-top: 1%;">
+    
+                <div class="col-lg-6" >
+        
+                    <div class="chart-container" style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+                        <p style="padding-left: 10px; padding-top: 8px;">Asset Distribution</p>
+                        <canvas id="MyChart3" style="width: 280px; height: 280px; margin: auto;"></canvas>
+                    </div>
+                </div>
+                <div class="col-lg-6 " style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+                    <div class="chart-container" >
+                        <p style="padding-left: 10px;padding-top: 8px;">Temperature over the month</p>
+                        <canvas id="MyChart1"></canvas>
+    
+                    </div>
+                </div>
+        
+               
+        
+            </div>
+    
+        <div class="row" style="margin-top: 1%;">
+    
+            <div class="col-lg-6">
+    
+                <div class="chart-container" style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+                    <p style="padding-left: 10px;padding-top: 8px;">Temperature over the region</p>
+                    <canvas id="MyChart2"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6 " style="box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); background-color: white;border-radius: 10px;padding: 2px;">
+                <div class="chart-container" >
+                    <p style="padding-left: 10px;    padding-top: 8px;">Bubble graph (Over assets)</p>
+                    <canvas id="MyChart4" ></canvas>
+
+                </div>
+            </div>
+    
+           
+    
+        </div>
+    </div>
+    <div class="row" style="margin-top: 1%;">
+        <div class="col-sm-2" >
+           <button class="btn btn-primary" style="height: 40px;" >Missing</button>
+        </div>
+        <div class="col-sm-2" style="margin-left: -50px;height: 40px;">
+            
+            <select class="form-control" id="temperature" name="temperature">
+                <option value="celsius">Temperature</option>
+                <option value="fahrenheit">< 0 Freezing</option>
+                <option value="kelvin">0-4 Good</option>
+                <option value="kelvin">4-8 Average</option>
+                <option value="kelvin">8-15 Poor</option>
+                <option value="kelvin">>  Alarmin</option>
+            </select>
+        </div>
+        
+    </div>
+    <div class="row" style="margin-top: 1%;--bs-gutter-x:0rem;">
+        <div class="table-responsive" style="padding-left: 7px;">
+            <table class="table table-hover mb-0 "  >
+              <thead >
+                <tr  >
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Outlet Status</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Site Name</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Region Area</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">VPO Class/Channel</th>
+                 
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Asset</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Temperature(avg/min/max)</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Last Seen</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Start Time(Open/Close)</th>
+                  <th style="background-color: #4398d3;color:white;font-size: 14px;">Gps</th>
+                 
+                </tr>
+              </thead>
+              <tbody  >
+                <tr >
+                    <td><i class="bi bi-circle-fill " style="color: #ff1a05;"></i> &nbsp;ABC</td>
+                    <td>Mumbai</td>
+                    <td>Pune</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+
+
+                <tr>
+                    <td><i class="bi bi-circle-fill " style="color: #3BA973;"></i>&nbsp;ABC</td>
+                    <td>Mumbai</td>
+                    <td>Pune</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-circle-fill " style="color: #3BA973;"></i>&nbsp;ABC</td>
+                    <td>Pune</td>
+                    <td>Mumbai</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-circle-fill " style="color: #ff1a05;"></i> &nbsp;ABC</td>
+                    <td>Pune</td>
+                    <td>Mumbai</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-circle-fill " style="color: #3BA973;"></i>&nbsp;ABC</td>
+                    <td>Mumbai</td>
+                    <td>Pune</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+                <tr>
+                    <td><i class="bi bi-circle-fill " style="color: #3BA973;"></i>&nbsp;ABC</td>
+                    <td>Mumbai</td>
+                    <td>Pune</td>
+                    <td>Silver</td>
+                    <td>GC1245</td>
+                    <td>10/5/15</td>
+                    <td>16 min ago</td>
+                    <td>8 AM</td>
+                    <td><i class="bi bi-geo-alt"></i></td>
+                </tr>
+                <!-- <tr *ngFor="let item of locationList; let i = index" 
+                (click)="goToDetails(item.areaId, item.locationId)" 
+                style="cursor: pointer;">
+                <td>{{ item.siteName }}</td>
+              <td>{{ item.locationName }}</td>
+              <td>{{ item.areaName }}</td>
+              <td>{{ item.assetCount }}</td>
+              <td>{{ getTimeDifference(item.lastUpdateOn) }}</td>
+              <td><i class="bi bi-geo-alt"></i></td>
+            </tr> -->
+              </tbody>
+            </table>
+          </div>
+    </div>
+    
+</div>
+
+
+
+
+
+<!-- [ sample-page ] end -->
