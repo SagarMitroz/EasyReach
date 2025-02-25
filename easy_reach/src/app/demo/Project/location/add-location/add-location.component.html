@@ -1,28 +1,158 @@
 <div class="row">
 
-  <div class="col-md-4">
-    <div class="form-group mb-3">
-      <label class="form-label" for="lastName">Select Site</label>
-          <select class="form-control" id="selectType">
-            <option value="BLE 1">Site 1</option>
-            <option value="VAN 1">Site 2</option>
-          </select>
-    </div>
+  
+  <div>
+    <!-- Tab Buttons -->
+    <button *ngFor="let tab of tabs" class="tablink" (click)="openPage(tab.name)"
+      [style.backgroundColor]="activeTab === tab.name ? '#ebf5fc' : ''">
+      {{ tab.name }}
+    </button>
   </div>
-  <div class="col-md-4">
-    <div class="form-group mb-3">
-      <label class="form-label" for="lastName">Region</label>
-      <input type="text" class="form-control" id="lastName" placeholder="Enter region" />
+
+  <!-- Tab Content -->
+  <div *ngFor="let tab of tabs" style="margin-top: -10px;">
+    <div [id]="tab.name" class="tabcontent tcard" *ngIf="activeTab === tab.name">
+      <ng-container [ngSwitch]="tab.name">
+        <!-- Scanner Tab -->
+        <div *ngSwitchCase="'Area'">
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                
+                <label class="form-label" for="firstName">Campus</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="countries"
+                        [searchKeyword]="keyword"
+                        placeholder="Select campus"
+                        (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)'
+                        historyIdentifier="countries"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                    
+
+              </div>
+              <div class="col-md-6">
+                
+                <label class="form-label" for="firstName">Location</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                      [data]="areas"
+                      [searchKeyword]="keyword1"
+                      placeholder="Select Loaction"
+                      (selected)='selectEvent1($event)'
+                      (inputChanged)='onChangeSearch1($event)'
+                      (inputFocused)='onFocused1($event)'
+                      historyIdentifier="areas"
+                      [itemTemplate]="itemTemplate1"
+                      [notFoundTemplate]="notFoundTemplate1">
+                    </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate1 let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate1 let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                    
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="locationType">Area Name</label>
+                  <input type="text" class="form-control" id="locationType" placeholder="Enter area name"
+                    [(ngModel)]="scannerData.locationType" name="scannerLocationType" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="lastName">Area Tag</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Enter area tag"
+                    [(ngModel)]="scannerData.firstName" name="scannerFirstName" />
+                </div>
+              </div>
+              
+             
+              
+              
+             
+              <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
+                <button type="button" class="btn btn-primary" (click)="saveForm('Area')"
+                  style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Device Tab -->
+        <div *ngSwitchCase="'Location'">
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                
+                <label class="form-label" for="firstName">Campus</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="countries"
+                        [searchKeyword]="keyword"
+                        placeholder="Select campus"
+                        (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)'
+                        historyIdentifier="countries"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
+                    
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="macAddress">Location</label>
+                  <input type="text" class="form-control" id="macAddress" placeholder="Enter location name"
+  [(ngModel)]="deviceData.macAddress" name="deviceMacAddress" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="locationTag">Location Tag</label>
+                  <input type="text" class="form-control" id="locationTag" placeholder="Enter location tag"
+                  [(ngModel)]="deviceData.locationTag" name="deviceLocationTag" />
+                </div>
+              </div>
+              
+              <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
+                <button type="button" class="btn btn-primary" (click)="saveForm('Location')"
+                  style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </ng-container>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="form-group mb-3">
-      <label class="form-label" for="lastName">Location</label>
-      <input type="text" class="form-control" id="lastName" placeholder="Enter location" />
-    </div>
-  </div>
-  <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
-    <button type="button" class="btn btn-primary"
-      style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
   </div>
 </div>
+

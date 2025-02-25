@@ -85,7 +85,7 @@
 
               </div>
               
-              <div class="col-md-6 ">
+              <!-- <div class="col-md-6 ">
                 <div class="form-group mb-3">
                   <label class="form-label">Location Type</label>
                   <div class="d-flex gap-5" style="margin-top: 10px;">
@@ -99,7 +99,7 @@
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-md-12 d-flex justify-content-center" style="margin-top: 1.5rem;">
                 <button type="button" class="btn btn-primary" (click)="saveForm('Scanner')"
                   style="padding: 0.65rem; width: 100px; font-size: 0.875rem;">Save</button>
@@ -132,21 +132,21 @@
                   <div class="d-flex gap-5" style="margin-top: 10px;">
                     <label>
                       <input class="form-check-input" type="radio" name="deviceLocationType" value="Vanilla"
-                        [(ngModel)]="deviceData.locationType" /> Vanilla
-                    </label>
-                    <label>
-                      <input class="form-check-input" type="radio" name="deviceLocationType" value="Temperature"
                         [(ngModel)]="deviceData.locationType" /> Temperature
                     </label>
                     <label>
-                      <input class="form-check-input" type="radio" name="deviceLocationType"
-                        value="TemperatureAcceleration" [(ngModel)]="deviceData.locationType" /> Temperature+
-                      Acceleration
+                      <input class="form-check-input" type="radio" name="deviceLocationType" value="Temperature"
+                        [(ngModel)]="deviceData.locationType" /> Vibration Detector
                     </label>
                     <label>
+                      <input class="form-check-input" type="radio" name="deviceLocationType"
+                        value="TemperatureAcceleration" [(ngModel)]="deviceData.locationType" /> GPS
+                     
+                    </label>
+                    <!-- <label>
                       <input class="form-check-input" type="radio" name="deviceLocationType" value="Advance"
                         [(ngModel)]="deviceData.locationType" /> Advance
-                    </label>
+                    </label> -->
                   </div>
                 </div>
               </div>
