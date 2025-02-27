@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-location.component.scss'
 })
 export class AddLocationComponent {
+  @Output() locationAdded = new EventEmitter<void>();
   tabs = [
    
     { name: 'Location', content: '' },
@@ -116,7 +117,7 @@ saveForm(tabName: string) {
 
   if (tabName === 'Area') {
       formData = { 
-          "parentId": "2",
+          "parentId":this.selectedAreas,
           "businessUnit": {
               "busUnitId": this.selectedCountry  
           },
@@ -177,6 +178,10 @@ sendDataToApi(data: any, apiUrl: string) {
   this.http.post(apiUrl, data, { headers }).subscribe(
       (response) => {
           console.log('Data successfully sent to API:', response);
+          alert("Save successfully! ")
+          this.locationAdded.emit();
+          this.fetchCountries();
+          this.fetchAreas();
       },
       (error) => {
           console.error('Error sending data to API:', error);

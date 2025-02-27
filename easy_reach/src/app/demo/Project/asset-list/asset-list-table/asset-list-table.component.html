@@ -8,7 +8,7 @@
         <table class="table table-hover mb-0 " >
           <thead >
             <tr >
-              <th style="background-color: #4398d3;color:white">NAME</th>
+              <th style="background-color: #4398d3;color:white">ASSET NAME</th>
              
               <th style="background-color: #4398d3;color:white">Asset Identifier</th>
               <th style="background-color: #4398d3;color:white">BLE</th>
@@ -19,7 +19,7 @@
           </thead>
           <tbody>
 
-           <tr *ngFor="let device of filteredDevices">
+           <tr *ngFor="let device of paginatedDevices">
             <td>{{ device.assetName }}</td>
             <td>{{ device.asset_identifier }}</td>
             
@@ -32,6 +32,33 @@
           </tbody>
         </table>
       </div>
+      <div style="margin-top: 10px;">
+        <nav aria-label="Device pagination mt-5">
+          <ul class="pagination justify-content-end">
+            <!-- Previous Button -->
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="prevPage()" [disabled]="currentPage === 1">
+                Previous
+              </button>
+            </li>
+    
+            <!-- Page Numbers -->
+            <li *ngFor="let page of getPaginationNumbers()" class="page-item" [class.active]="page === currentPage">
+              <button class="page-link" (click)="goToPage(page)">
+                {{ page }}
+              </button>
+            </li>
+    
+            <!-- Next Button -->
+            <li class="page-item" [class.disabled]="currentPage >= totalPages">
+              <button class="page-link" (click)="nextPage()" [disabled]="currentPage >= totalPages">
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+    
+      </div>
    
   </div>
 
@@ -40,7 +67,7 @@
     
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Update BLE</h5>
+        <h5 class="modal-title">Update Asset Mapping</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
    
@@ -49,7 +76,13 @@
         <div class="row">
           <div class="col-md-6">
             <div class="mb-3">
-              <label for="deviceName" class="form-label">Device Name</label>
+              <label for="deviceN" class="form-label">Device Name</label>
+              <input type="text" id="deviceN" class="form-control" [(ngModel)]="selectedDevice.deviceName" name="deviceN" readonly style="cursor: not-allowed;">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="deviceName" class="form-label">Asset Name</label>
               <input type="text" id="deviceName" class="form-control" [(ngModel)]="selectedDevice.assetName" name="deviceName" required>
             </div>
           </div>
@@ -63,7 +96,8 @@
           <div class="col-md-6">
             <div class="mb-3">
               <label for="macId" class="form-label">Asset Identifier</label>
-              <input type="text" id="macId" class="form-control"    [ngModel]="selectedDevice.asset_identifier"  name="macId" required>
+              <input type="text" id="macId" class="form-control" [(ngModel)]="selectedDevice.asset_identifier" name="macId" required>
+
             </div>
           </div>
           <div class="col-md-6 mb-3">

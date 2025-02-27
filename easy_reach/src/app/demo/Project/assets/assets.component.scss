@@ -34,7 +34,7 @@
 }
 
 .card {
-  background-color: #63c1ff;
+  background-color: #4398d3;
   padding: 2px;
   text-align: center;
   border: 1px solid #ccc;
@@ -136,4 +136,53 @@
 
     box-shadow: none;
     border:none;
+}
+
+
+
+
+
+
+.battery-container {
+  width: 20px;
+  height: 25px;
+  border: 1px solid white;
+  border-radius: 2px;
+  position: relative;
+  margin: 0px auto;
+  overflow: hidden;
+  display: flex
+;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.battery-tip {
+  width: 20px;
+  height: 10px;
+  background: #333;
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.battery-level {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  transition: height 0.5s ease-in-out;
+}
+
+.battery-percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5rem;
+ 
+  color: white;
+  z-index: 1;
+  //text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }

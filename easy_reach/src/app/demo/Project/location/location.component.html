@@ -1,6 +1,6 @@
 <div class="row">
   <h5 class="mb-3">Add New Location</h5>
-  <app-add-location/>
+  <app-add-location (locationAdded)="loadDevices()"/>
 </div>
 
 
@@ -36,7 +36,7 @@
                 <td>{{ device.areaName }}</td>
                 <td>{{ device.areaTag }}</td>
                
-                <td><i class="bi bi-geo-alt"></i></td>
+                <td (click)="openMap()"><i class="bi bi-geo-alt"></i></td>
                 <td>
                   <i class="bi bi-pencil-square" (click)="openModal(device, editModal)" ></i>&nbsp;&nbsp;&nbsp;
                   <i class="bi bi-trash text-danger"></i>
@@ -80,11 +80,15 @@
   
 <!-- UPDATE MODAL -->
 
+<app-map-popup *ngIf="showMapPopup"></app-map-popup>
+
+
+
 <ng-template #editModal let-modal>
 
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Update BLE</h5>
+      <h5 class="modal-title">Update Area</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
         (click)="modal.dismiss('Cross click')"></button>
     </div>

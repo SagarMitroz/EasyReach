@@ -15,6 +15,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
   styleUrl: './asset-list-table.component.scss'
 })
 export class AssetListTableComponent {
+  currentPage: number = 1;
+  pageSize: number = 10;
   devices: any[] = [];
   searchText: string = ''; // Search input model
   selectedDevice: any = {};
@@ -74,6 +76,42 @@ export class AssetListTableComponent {
   }
 
 
+  get paginatedDevices() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.filteredDevices.slice(startIndex, endIndex);
+  }
+  
+
+  nextPage() {
+    if ((this.currentPage * this.pageSize) < this.filteredDevices.length) {
+      this.currentPage++;
+    }
+  }
+  
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+  
+  get totalPages(): number {
+    return Math.ceil(this.filteredDevices.length / this.pageSize);
+  }
+
+  getPaginationNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+  
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
+
+
+
+
+
+
 
 
    openModal(device: any, modalContent: TemplateRef<any>) {
@@ -97,9 +135,10 @@ export class AssetListTableComponent {
       assetId: this.selectedDevice.assetId ,
       assetName: this.selectedDevice.assetName,
       busUnitId: this.selectedCountry ,
-      busUnitCode: this.selectedDevice.busUnitCode || "GC4566742",
-      busUnitCustIdentifire: this.selectedDevice.busUnitCustIdentifire || "12334456",
-      assetType: this.selectedDevice.assetType || 1
+      busUnitCode: this.selectedDevice.busUnitCode ,
+      busUnitCustIdentifire: this.selectedDevice.busUnitCustIdentifire,
+      assetType: this.selectedDevice.assetType ,
+      asset_identifier:this.selectedDevice.asset_identifier
             
       };
   

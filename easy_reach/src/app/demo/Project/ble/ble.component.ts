@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component,ViewChild, AfterViewInit  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BleListComponent } from './ble-list/ble-list.component';
@@ -13,7 +13,12 @@ import { Console } from 'console';
   templateUrl: './ble.component.html',
   styleUrls: ['./ble.component.scss'],
 })
-export class BleComponent {
+export class BleComponent implements AfterViewInit {
+  @ViewChild(BleListComponent) bleListComponent!: BleListComponent;
+  ngAfterViewInit(): void {
+    // Ensure child component is available
+  }
+
   tabs = [
     { name: 'Scanner', content: '' },
     { name: 'Device', content: '' },
@@ -54,7 +59,7 @@ selectedArea: any = null;
     const storedData = localStorage.getItem('formData');
     this.tableData = storedData ? JSON.parse(storedData) : [];
     this.fetchCountries();
-    this.fetchAreas();
+    
     //this.fetchLocations();
   }
 
@@ -133,7 +138,9 @@ selectedArea: any = null;
     this.http.post(apiUrl, data, { headers }).subscribe(
       (response) => {
         console.log('Data successfully sent to API:', response);
-      },
+        alert("Save successfully!");
+        this.bleListComponent.loadDevices();
+},
       (error) => {
         console.error('Error sending data to API:', error);
       }
@@ -142,25 +149,31 @@ selectedArea: any = null;
 
   
 
-  fetchAreas() {
+  fetchAreas(locationId: number) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.bearerToken}`,
+      'Content-Type': 'application/json',
     });
-
-    this.http.get<any>(this.areaApiUrl, { headers }).subscribe((response) => {
-     
-      if (response && response.response && Array.isArray(response.response)) {
-        
-        this.areas = response.response.map((item: any) => ({
-          
-          id: item.locationId,
-          name: item.locationName, // Ensure the API response has a `name` field
-        }));
-      } else {
-        console.error('Unexpected API response format:', response);
+  
+    const body = { locationId:locationId };
+  
+    this.http.post<any>(this.areaApiUrl, body, { headers }).subscribe(
+      (response) => {
+        if (response && response.response && Array.isArray(response.response)) {
+          this.areas = response.response.map((item: any) => ({
+            id: item.locationId,
+            name: item.locationName, // Ensure the API response has a `name` field
+          }));
+        } else {
+          console.error('Unexpected API response format:', response);
+        }
+      },
+      (error) => {
+        console.error('Error fetching areas:', error);
       }
-    });
+    );
   }
+  
 
 
   fetchCountries() {
@@ -176,14 +189,21 @@ selectedArea: any = null;
           
           id: item.locationId,
           name: item.locationName, // Ensure the API response has a `name` field
+          
         }));
+       
+
       } else {
         console.error('Unexpected API response format:', response);
       }
+      
+      
     });
+    
   }
 
   selectEvent(country: any) {
+    this.fetchAreas(country.id);
     console.log(country);
     this.selectedCountry = country.id; // Store selected country
    
@@ -211,6 +231,7 @@ selectedArea: any = null;
  
 
   selectEvent1(area: any) {
+    
    console.log(area);
     this.selectedAreas = area.id; // Store selected country
    

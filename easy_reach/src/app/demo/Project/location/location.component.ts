@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { MapPopupComponent } from './map-popup/map-popup.component';
 @Component({
   selector: 'app-location',
   standalone: true,
   imports:[CommonModule,
-    AddLocationComponent,SharedModule
+    AddLocationComponent,SharedModule,MapPopupComponent
   ],
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.scss']  // Corrected 'styleUrl' to 'styleUrls'
@@ -58,13 +59,14 @@ export class LocationComponent {
    }
  
    get filteredDevices() {
-     return this.devices.filter(device =>
-       device.locationName?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-       device.locationTag?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-       device.areaName?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-       device.areaTag.toLowerCase().includes(this.searchText.toLowerCase())
-     );
-   }
+    const search = this.searchText?.toLowerCase() || ''; // Ensure searchText is not undefined
+    return this.devices.filter(device =>
+      device.locationName?.toLowerCase().includes(search) ||
+      device.locationTag?.toLowerCase().includes(search) ||
+      device.areaName?.toLowerCase().includes(search) ||
+      device.areaTag?.toLowerCase().includes(search)
+    );
+  }
  
    get paginatedDevices() {
      const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -132,6 +134,14 @@ export class LocationComponent {
         console.error('Error updating device:', error);
       },
     });
+  }
+
+
+
+  showMapPopup = false;
+
+  openMap() {
+    this.showMapPopup = !this.showMapPopup;
   }
 
 }

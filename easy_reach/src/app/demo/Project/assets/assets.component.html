@@ -85,24 +85,41 @@
             <div class="header-row">
               <!-- Left part of the header -->
               <div class="header-left">
-                <p style="margin-bottom: 0rem;text-align: justify;font-size: 15px;">{{ card.title }}</p>
-                <p style="margin-bottom: 0rem;font-size: 12px;">Refrigerator</p>
+                <p style="margin-bottom: 0rem;text-align: justify;font-size: 15px;">{{ card.assetName }}</p>
+                <p style="margin-bottom: 0rem;font-size: 12px;">{{ card.Mac }}</p>
               </div>
               <!-- Right part of the header -->
               <div class="header-right">
                 <div
                   style="border-radius: 60%;background-color: white;height: 50px;width: 50px;padding-top: 4px;">
-                  <p style="margin-bottom: 0rem;font-size: 14px;color: black;">12</p>
+                  <p style="margin-bottom: 0rem;font-size: 14px;color: black;">{{ card.duration }}</p>
                   <p style="font-size: 10px;margin-bottom: 0rem; color: black;">months</p>
                 </div>
               </div>
             </div>
             <hr style="margin: 0.3rem;opacity: 1.13;">
             <div class="row">
-              <p style="text-align: justify;font-size: 14px;">Bhosari/Paint shop</p>
-              <div style="width: 80%;margin-left: 9px;background-color: white;border-radius: 5px;padding: 4px;">
-                <p style="color: black;font-size: 12px;margin-bottom: 0rem;">12:00 PM 23/01/2024</p>
+              <div class="col-md-12">
+                <p style="text-align: justify;font-size: 14px;">{{ card.Location }}/{{ card.area }}</p>
               </div>
+              <div class="col-md-9">
+                <div style="width: 115%;margin-left: 0px;background-color: white;border-radius: 5px;padding: 4px;">
+                  <p style="color: black;font-size: 0.7rem;margin-bottom: 0rem;">{{ card.updatedon | date:'h:mma dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="battery-container">
+                  <div class="battery-level" [ngStyle]="{ 'height': batteryLevel + '%', 'background': batteryColor }"></div>
+                  <div class="battery-tip"></div>
+                  <div class="battery-percentage">{{ batteryLevel }}%</div>
+              </div>
+             
+              </div>
+             
+             
+              
+              
+           
             </div>
           </div>
         </div>

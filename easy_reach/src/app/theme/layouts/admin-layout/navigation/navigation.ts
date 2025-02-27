@@ -81,11 +81,11 @@ export const NavigationItems: NavigationItem[] = [
       },
       {
         id: 'assets',
-        title: 'Assets',
+        title: 'Live Locations',
         type: 'item',
         classes: 'nav-item',
         url: '/assets',
-        icon: 'setting',
+        icon: 'aim',
         breadcrumbs: false
       },
       {
