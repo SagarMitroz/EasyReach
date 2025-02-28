@@ -9,30 +9,62 @@
 <p style="text-align: justify;margin-bottom: 0rem;color: white;">Search your assets</p>
 <p style="text-align: justify;color: white;">by name, location, etc...
   </p>
-                <div class="form">
-                  <i class="bi bi-search"></i>
-                  <input type="text" class="form-control form-input" placeholder="Search by asset...">
-                 
-                </div>
+               
                 
               </div>
-              <div class="row mt-2">
+              <div class="row ">
                 <div class="col-md-6">
 
-                  <div class="form">
-                    <i class="bi bi-search"></i>
-                    <input type="text" class="form-control form-input" placeholder="Search by asset type  ...">
-                   
+                  
+                    <label class="form-label" for="firstName">Campus</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="countries"
+                        [searchKeyword]="keyword"
+                        placeholder="Select campus"
+                        (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)'
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    
+                    
                   </div>
                   
                 </div>
                 <div class="col-md-6">
 
-                  <div class="form">
-                    <i class="bi bi-search"></i>
-                    <input type="text" class="form-control form-input" placeholder="Search by location   ...">
-                   
-                  </div>
+                  <label class="form-label" for="firstName">Location</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                      [data]="areas"
+                      [searchKeyword]="keyword1"
+                      placeholder="Select Loaction"
+                      (selected)='selectEvent1($event)'
+                      (inputChanged)='onChangeSearch1($event)'
+                      (inputFocused)='onFocused1($event)'
+                      
+                      [itemTemplate]="itemTemplate1"
+                      [notFoundTemplate]="notFoundTemplate1">
+                    </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate1 let-item>
+                        <a [innerHTML]="item.name"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate1 let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div>
                   
                 </div>
               </div>
@@ -129,11 +161,11 @@
 </div>
 
 <!-- Pagination Controls -->
-<!-- <div class="pagination">
+<div class="pagination">
   <button class="btn btn-sm" (click)="changePage(-1)" [disabled]="currentPage === 1">Previous</button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
   <button class="btn btn-sm" (click)="changePage(1)" [disabled]="currentPage === totalPages">Next</button>
-</div> -->
+</div>
 <nav aria-label="Page navigation example" *ngIf="totalPages > 1">
   <ul class="pagination justify-content-end">
     <!-- Previous Button -->

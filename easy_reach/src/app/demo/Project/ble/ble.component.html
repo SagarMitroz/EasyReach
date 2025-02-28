@@ -18,16 +18,33 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group mb-3">
-                  <label class="form-label" for="firstName">Name</label>
+                  <label class="form-label" for="firstName">Device Name</label>
                   <input type="text" class="form-control" id="firstName" placeholder="Enter Name"
-                    [(ngModel)]="scannerData.firstName" name="scannerFirstName" />
+                    [(ngModel)]="scannerData.firstName" name="scannerFirstName" required
+                   />
+                    <!-- <div *ngIf="dsiviceInput.invalid && dsiviceInput.touched" class="text-danger">
+                      Device name is required.
+                    </div> -->
                 </div>
+                
               </div>
               <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label class="form-label" for="macAddress">Mac Address</label>
-                  <input type="text" class="form-control" id="macAddress" placeholder="Enter mac id"
-                    [(ngModel)]="scannerData.macAddress" name="scannerMacAddress" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="macAddress"
+                    placeholder="Enter mac id"
+                    [(ngModel)]="scannerData.macAddress"
+                    name="scannerMacAddress"
+                    required
+                    
+                  />
+                  <!-- Show error message when input is empty -->
+                  <!-- <div *ngIf="macAddressInput.invalid && macAddressInput.touched" class="text-danger">
+                    Mac Address is required.
+                  </div> -->
                 </div>
               </div>
               <div class="col-md-6 mb-3">
@@ -41,7 +58,7 @@
                         (selected)='selectEvent($event)'
                         (inputChanged)='onChangeSearch($event)'
                         (inputFocused)='onFocused($event)'
-                        historyIdentifier="countries"
+                      
                         [itemTemplate]="itemTemplate"
                         [notFoundTemplate]="notFoundTemplate">
                       </ng-autocomplete>
@@ -68,7 +85,7 @@
                       (selected)='selectEvent1($event)'
                       (inputChanged)='onChangeSearch1($event)'
                       (inputFocused)='onFocused1($event)'
-                      historyIdentifier="areas"
+                     
                       [itemTemplate]="itemTemplate1"
                       [notFoundTemplate]="notFoundTemplate1">
                     </ng-autocomplete>

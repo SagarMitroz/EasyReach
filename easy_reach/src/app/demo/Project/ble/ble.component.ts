@@ -74,6 +74,12 @@ selectedArea: any = null;
     let formData;
   
     if (tabName === 'Scanner') {
+
+      if (!this.scannerData.macAddress || this.scannerData.macAddress.trim() === '') {
+        console.error('Mac Address is required.');
+        alert("All fields required")
+        return; // Stop form submission if macAddress is empty
+      }
       formData = { 
         macId: this.scannerData.macAddress,
         deviceName: this.scannerData.firstName, // Assuming firstName represents the device name
