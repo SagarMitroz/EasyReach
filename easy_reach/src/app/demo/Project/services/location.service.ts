@@ -13,7 +13,7 @@ export class LocationService {
   getLocations(): Observable<Location[]> {
     
     const headers = new HttpHeaders({
-      'Authorization': 'BearerEAAPEzKVL9z0BO2jukAlcB1c0ZBZBbAsNw3ZB8mCkr5UGy8PNhvoItlXLcE7Qb5MWsZCgysf3gMtPzqhkXdRoShZAIR0VRCZAKh0vBqzwDiwk9KmjO69PQkc4xggbhmQOONnuVHRSSE7I42wFvbbuv4qsbnoyvbLrZCP8qvNcGyHcbVezJcrJj9uGIOlmFbZBTNoLaIXjjTC2nBMU7GAAMbJ5i77hw69BqlbEcZBE4uN59XKpB9k4UoKMZD '
+      'Authorization': 'BearerEAAPEzKVL9z0BO2jukAlcB1c0ZBZBbAsNw3ZB8mCkr5UGy8PNhvoItlXLcE7Qb5MWsZCgysf3gMtPzqhkXdRoShZAIR0VRCZAKh0vBqzwDiwk9KmjO69PQkc4xggbhmQOONnuVHRSSE7I42wFvbbuv4qsbyvbLrZCP8qvNcGyHcbVezJcrJj9uGIOlmFbZBTNoLaIXjjTC2nBMU7GAAMbJ5i77hw69BqlbEcZBE4uN59XKpB9k4UoKMZD '
     });
   
     return this.http.get<Location[]>(this.apiUrl, { headers });

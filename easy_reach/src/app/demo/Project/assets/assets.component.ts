@@ -1,3 +1,4 @@
+import { Location } from './../model/location';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -13,25 +14,44 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
   styleUrl: './assets.component.scss'
 })
 export class AssetsComponent implements OnInit, OnChanges {
+
   constructor(private http: HttpClient) {
 
     this.fetchCountries();
     this.fetchAreas();
+    this.fetchAsset();
+    this.fetchLocation();
   }
+
+campusIdforS:number;
+locationIdforS:number;
+
+
+  
   selectedLocation: any = null;
   locid:number;
   keyword = 'name';
   keyword1 = 'name';
+  keyword2 = 'name';
+  keyword3 = 'name';
+  locations: any[] = [];
+  assets: any[] = [];
   countries: any[] = []; // Updated to hold API response
   areas: any[] = []; // Array to hold area data
 selectedArea: any = null;
+selectedLocs: any = null;
+selectedasset: any = null;
+selectedAssets: number = 0;
   selectedCountry: number = 0;
+  selectedLoc: number = 0;
   selectedAreas: number = 0;
-  private areaApiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/loc/list'; 
+  private assetlist = 'https://docuquery.ai/assettracker/api/v1/c/a/assetMapping';
+  private areaApiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/loc/a/list';
+  private locationApiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/loc/list';  
   private capiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/bu/list';
   private liveapiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/l/liveLocation'; 
   private missingAssetUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/l/missingAsset'; 
-  private token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhc3NldHRyYWNraW5nIiwic3ViIjoidm9kYWZvbmUiLCJyb2xlcyI6WyJBZG1pbiJdLCJleHAiOjE3NDA3Nzg5NzUsImlhdCI6MTczOTI3ODk3NX0.nn69vAIZUoC32mU9UfIlRR4q8qmWF4uY3rh4hN01gm2oNNZ3dqZBXO_YgGiGgW-ikVUZR8pcEvan5_NFfoBlWg'; // Replace with actual token securely
+  private token = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhc3NldHRyYWNraW5nIiwic3ViIjoidm9kYWZvbmUiLCJyb2xlcyI6WyJBZG1pbiJdLCJleHAiOjE3NDIzMDcwMDAsImlhdCI6MTc0MDgwNzAwMH0.NkRItuKT4ILXrCl4YZNkhJjXe0iWbU4yLKvZ4ChpwEu2NEFFwadyj5ku0AoHUyHMTYNugVuVvwBFV7vPDQbwoQ'; // Replace with actual token securely
 
   devices: any[] = [];
   missingDevices: any[] = [];
@@ -58,6 +78,9 @@ selectedArea: any = null;
   itemsPerPage: number = 15;
   currentPage: number = 1;
 
+
+
+  
   ngOnInit(): void {
     this.loadTotalAssets();
     this.loadMissingAssets();
@@ -71,7 +94,10 @@ selectedArea: any = null;
    * Fetches Total Assets (GET request).
    */
   loadTotalAssets(): void {
-    this.getDevices(this.liveapiUrl).subscribe({
+    const requestBody={
+      assetId:this.locationIdforS,
+    }
+    this.getDevices(this.liveapiUrl, requestBody).subscribe({
       next: (data) => {
         this.devices = data.response;
         console.log('Total Assets Loaded:', this.devices);
@@ -94,12 +120,26 @@ selectedArea: any = null;
     });
   }
 
+  getDevices(apiUrl: string,body: any): Observable<any> {
+    // console.log(this.token,"token")
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`, // Fixed string interpolation
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    });
+
+    return this.http.post<any>(apiUrl,body, { headers });
+  }
+
+
   /**
    * Fetches Missing Assets (POST request).
    */
   loadMissingAssets(): void {
-    const requestBody = {}; // Add necessary parameters if needed
-
+     // Add necessary parameters if needed
+const requestBody={
+  assetId:this.locationIdforS,
+}
     this.postDevices(this.missingAssetUrl, requestBody).subscribe({
       next: (data) => {
         if (data && data.response) {
@@ -142,28 +182,16 @@ selectedArea: any = null;
   
 
 
+  
 
 
-  /**
-   * Makes a GET request to fetch devices.
-   */
-  getDevices(apiUrl: string): Observable<any> {
-    // console.log(this.token,"token")
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.token}`,
-      'Content-Type': 'application/json',
-    });
 
-    return this.http.get<any>(apiUrl, { headers });
-  }
+  
 
-  /**
-   * Makes a POST request to fetch devices.
-   */
- 
-  /**
-   * Formats the date into "12pm 26/02/2025" format.
-   */
+
+
+
+  
   formatDate(dateString: string): string {
     if (!dateString) return 'N/A';
     
@@ -296,29 +324,176 @@ selectedArea: any = null;
     // do something
   }
 
+  selectEvent1(area: any) {
+    console.log(area);
+    //  this.selectedAreas = area.id; // Store selected country
 
+    
+    if (area) {
+      console.log(area);
+      this.selectedAreas = area.id; // Store selected asset ID
+    } else {
+      console.log(area);
+      this.selectedAreas = null; // Reset when cleared
+    }
+
+
+    // if (area && area.id) {
+    //   this.selectedAreas = area.id; // Store the selected area ID
+    // } else {
+    //   this.selectedAreas = 0; // If cleared, set ID to 0
+    // }
+    // console.log("Selected Area ID:", this.selectedAreas);
+  
+    
+  // Set lastName to selected country
+   }
+
+   clearSelection() {
+   
+    this.selectedAreas = 0;
+    console.log("Id set " +this.selectedAreas );
+  }
+   
+  test2($event: void) {
+    this.onChangeSearch1(null); 
+
+    
+
+    }
+
+
+   onChangeSearch1(search: string) {
+    console.log("Selection cleared, setting ID to 0");
+    if (search === '') { // User clicked 'X' to clear input
+      this.selectedAreas = 0; // Reset to 0
+      console.log("Selection cleared, setting ID to 0");
+    }
+   }
+ 
+   onFocused1(e) {
+     // do something
+   }
   
 
  
+  fetchAsset() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+  
+    this.http.get<any>(this.assetlist, { headers }).subscribe((response) => {
+     
+     
+      if (response && response.response && Array.isArray(response.response)) {
+        
+        this.assets = response.response.map((item: any) => ({
+          
+          id: item.assetId,
+          name: item.assetName, // Ensure the API response has a `name` field
+        }));
+      } else {
+        console.error('Unexpected API response format:', response);
+      }
+    });
+  }
+  
 
-  selectEvent1(area: any) {
-   console.log(area);
-    this.selectedAreas = area.id; // Store selected country
+
+
+
+  test3($event: void) {
+    this.selectEvent2(null); 
+    }
+  
+
+selectEvent2(assets: any) {
+  //  console.log(assets);
+  //   this.selectedAssets = assets.id; // Store selected country
+
+
+  if (assets) {
+    console.log(assets);
+    this.selectedAssets = assets.id; // Store selected asset ID
+  } else {
+    console.log(assets);
+    this.selectedAssets = null; // Reset when cleared
+  }
    
  // Set lastName to selected country
   }
   
-  onChangeSearch1(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
+  onChangeSearch2(search: string) {
+    if (!search) { // If the input is empty (user cleared it)
+      this.selectedAssets = 0; // Reset to 0
+      console.log("Selection cleared, setting ID to 0");
+    }
   }
 
-  onFocused1(e) {
+  onFocused2(e) {
     // do something
   }
 
 
 
 
+  fetchLocation() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+  
+    this.http.get<any>(this.locationApiUrl, { headers }).subscribe((response) => {
+     
+     
+      if (response && response.response && Array.isArray(response.response)) {
+        
+        this.locations = response.response.map((item: any) => ({
+          
+          id: item.locationId,
+          name: item.locationName, // Ensure the API response has a `name` field
+        }));
+      } else {
+        console.error('Unexpected API response format:', response);
+      }
+    });
+  }
+  
+
+
+selectEvent3(locations: any) {
+   console.log(locations);
+    this.selectedAreas = locations.id; // Store selected country
+   
+ // Set lastName to selected country
+  }
+  
+  onChangeSearch3(search: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+  onFocused3(e) {
+    // do something
+  }
+  
+  getTimeSixHoursAgo(timeString: string): string {
+    const [hours, minutes, seconds] = timeString.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours - 6, minutes, seconds);
+    
+    return date.toTimeString().split(' ')[0]; // Format HH:MM:SS
+  }
+
+  onSearch() {
+    console.log("Selected IDs:", {
+    
+      areaId: this.selectedCountry,
+      assetId: this.selectedAssets,
+    });
+    this.campusIdforS= this.selectedCountry;
+     this.locationIdforS= this.selectedAssets
+     this.loadTotalAssets();
+     this.loadMissingAssets();
+  }
 }
 

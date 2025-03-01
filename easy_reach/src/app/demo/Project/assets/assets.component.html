@@ -1,94 +1,125 @@
 <div class="row">
-  <h5 class="mt-3">Assets </h5>
-    <div class="col-md-12 col-xl-6">
+  <h5 class="mt-3">Live Locations </h5>
 
-        <div class="card" style="background-color: #4398D3;">
-            <div class="card-body" style=" box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); border-radius: 10px;  padding: 30px;">
+  <div class="col-md-12 col-xl-12">
 
-               <div class="col-md-12">
-<p style="text-align: justify;margin-bottom: 0rem;color: white;">Search your assets</p>
-<p style="text-align: justify;color: white;">by name, location, etc...
-  </p>
-               
-                
-              </div>
-              <div class="row ">
-                <div class="col-md-6">
+    <div class="card" style="background-color: #4398D3;">
+      <div class="card-body" style=" box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); border-radius: 10px;  padding: 30px;">
 
-                  
-                    <label class="form-label" for="firstName">Campus</label>
-                    <div class="ng-autocomplete">
-                      <ng-autocomplete
-                        [data]="countries"
-                        [searchKeyword]="keyword"
-                        placeholder="Select campus"
-                        (selected)='selectEvent($event)'
-                        (inputChanged)='onChangeSearch($event)'
-                        (inputFocused)='onFocused($event)'
-                        [itemTemplate]="itemTemplate"
-                        [notFoundTemplate]="notFoundTemplate">
-                      </ng-autocomplete>
-                    
-                      <ng-template #itemTemplate let-item>
-                        <a [innerHTML]="item.name"></a>
-                      </ng-template>
-                    
-                      <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-                    
-                    
-                  </div>
-                  
-                </div>
-                <div class="col-md-6">
+        <div class="col-md-12">
+          <p style="text-align: justify;margin-bottom: 0rem;color: white;">Search your assets</p>
+          <p style="text-align: justify;color: white;">by Campus, Location, Area, Asset name etc...
+          </p>
 
-                  <label class="form-label" for="firstName">Location</label>
-                    <div class="ng-autocomplete">
-                      <ng-autocomplete
-                      [data]="areas"
-                      [searchKeyword]="keyword1"
-                      placeholder="Select Loaction"
-                      (selected)='selectEvent1($event)'
-                      (inputChanged)='onChangeSearch1($event)'
-                      (inputFocused)='onFocused1($event)'
-                      
-                      [itemTemplate]="itemTemplate1"
-                      [notFoundTemplate]="notFoundTemplate1">
-                    </ng-autocomplete>
-                    
-                      <ng-template #itemTemplate1 let-item>
-                        <a [innerHTML]="item.name"></a>
-                      </ng-template>
-                    
-                      <ng-template #notFoundTemplate1 let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-                    </div>
-                  
-                </div>
-              </div>
-              <div class="mt-2" style="display: flex; justify-content: flex-end;">
-                <button class="btn " style="background-color: #56bafc;color: white;">Search</button>
-              </div>
-              </div>
+
         </div>
+
+
+        <div class="row">
+          <div class="col-md-3">
+            <label class="form-label text-start d-block text-light fw-bold" for="firstName">Campus</label>
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="countries" [searchKeyword]="keyword" placeholder="Select campus"
+                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)'   [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-start d-block text-light fw-bold" for="firstName">Location</label>
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="locations" [searchKeyword]="keyword" placeholder="Select location"
+                (selected)='selectEvent3($event)' (inputChanged)='onChangeSearch3($event)'
+                (inputCleared)='($event)'
+                (inputFocused)='onFocused3($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label text-start d-block text-light fw-bold" for="firstName">Area</label>
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="areas" [searchKeyword]="keyword1" placeholder="Select area"
+                (selected)='selectEvent1($event)' (inputChanged)='onChangeSearch1($event)'
+                (inputFocused)='onFocused1($event)' (inputCleared)='test2($event)' [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+
+          </div>
+          
+          <div class="col-md-3">
+            <label class="form-label text-start d-block text-light fw-bold" for="firstName">Asset Name</label>
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="assets" [searchKeyword]="keyword2" placeholder="Select asset"
+                (selected)='selectEvent2($event)' (inputChanged)='onChangeSearch2($event)'
+                (inputFocused)='onFocused2($event)'(inputCleared)='test3($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+
+
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-3">
+            <div class="mt-2" style="display: flex; justify-content: center;">
+              <button class="btn  " style="background-color: #56bafc;color: white; width: 15%;"
+                (click)="onSearch()">Search</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
+  </div>
 </div>
 
 
-<div>
+
+
+<div class="mt-2">
   <!-- Tab Buttons -->
-  <button
-    *ngFor="let tab of tabs"
-    class="tablink"
-    (click)="openPage(tab.name, tab.color)"
+  <button *ngFor="let tab of tabs" class="tablink" (click)="openPage(tab.name, tab.color)"
     [style.backgroundColor]="activeTab === tab.name ? tab.color : ''"
     style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
     <div class="row1">
-      <div
-        class="vl"
-        [ngStyle]="{
+      <div class="vl" [ngStyle]="{
           'border-left-color': activeTab === tab.name ? '#4398d3' : 'transparent'
         }"></div>
       <div class="tab-content">
@@ -100,14 +131,8 @@
 </div>
 
 <!-- Tab Content -->
-<div
-  class="mrow"
-  *ngFor="let tab of tabs"
-  [style.backgroundColor]="activeTab === tab.name ? tab.color : ''">
-  <div
-    [id]="tab.name"
-    class="tabcontent"
-    [style.display]="activeTab === tab.name ? 'block' : 'none'">
+<div class="mrow" *ngFor="let tab of tabs" [style.backgroundColor]="activeTab === tab.name ? tab.color : ''">
+  <div [id]="tab.name" class="tabcontent" [style.display]="activeTab === tab.name ? 'block' : 'none'">
     <div class="row">
       <!-- Use paginatedCards instead of tab.cards -->
       <div *ngFor="let card of paginatedCards" class="column">
@@ -122,9 +147,9 @@
               </div>
               <!-- Right part of the header -->
               <div class="header-right">
-                <div
-                  style="border-radius: 60%;background-color: white;height: 50px;width: 50px;padding-top: 4px;">
-                  <p style="margin-bottom: 0rem;font-size: 14px;color: black;">{{ card.duration }}</p>
+                <div style="border-radius: 60%;background-color: white;height: 50px;width: 50px;padding-top: 4px;">
+                  <p style="margin-bottom: 0rem;font-size: 14px;color: black;">{{ getTimeSixHoursAgo(card.duration) }}
+                  </p>
                   <p style="font-size: 10px;margin-bottom: 0rem; color: black;">months</p>
                 </div>
               </div>
@@ -136,22 +161,20 @@
               </div>
               <div class="col-md-9">
                 <div style="width: 115%;margin-left: 0px;background-color: white;border-radius: 5px;padding: 4px;">
-                  <p style="color: black;font-size: 0.7rem;margin-bottom: 0rem;">{{ card.updatedon | date:'h:mma dd/MM/yyyy' }}</p>
+                  <p style="color: black;font-size: 0.7rem;margin-bottom: 0rem;">{{ card.updatedon | date:'h:mma
+                    dd/MM/yyyy' }} </p>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="battery-container">
-                  <div class="battery-level" [ngStyle]="{ 'height': batteryLevel + '%', 'background': batteryColor }"></div>
+                  <div class="battery-level" [ngStyle]="{ 'height': batteryLevel + '%', 'background': batteryColor }">
+                  </div>
                   <div class="battery-tip"></div>
                   <div class="battery-percentage">{{ batteryLevel }}%</div>
+                </div>
+
               </div>
-             
-              </div>
-             
-             
-              
-              
-           
+
             </div>
           </div>
         </div>
@@ -161,26 +184,23 @@
 </div>
 
 <!-- Pagination Controls -->
-<div class="pagination">
+<!-- <div class="pagination">
   <button class="btn btn-sm" (click)="changePage(-1)" [disabled]="currentPage === 1">Previous</button>
   <span>Page {{ currentPage }} of {{ totalPages }}</span>
   <button class="btn btn-sm" (click)="changePage(1)" [disabled]="currentPage === totalPages">Next</button>
-</div>
+</div> -->
 <nav aria-label="Page navigation example" *ngIf="totalPages > 1">
   <ul class="pagination justify-content-end">
     <!-- Previous Button -->
     <li class="page-item" [class.disabled]="currentPage === 1">
       <a class="page-link" href="javascript:void(0)" (click)="changePage(-1)" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
-       
+
       </a>
     </li>
 
     <!-- Page Numbers -->
-    <li
-      class="page-item"
-      *ngFor="let page of getPaginationRange()"
-      [class.active]="currentPage === page">
+    <li class="page-item" *ngFor="let page of getPaginationRange()" [class.active]="currentPage === page">
       <a class="page-link" href="javascript:void(0)" (click)="goToPage(page)">{{ page }}</a>
     </li>
 
@@ -188,7 +208,7 @@
     <li class="page-item" [class.disabled]="currentPage === totalPages">
       <a class="page-link" href="javascript:void(0)" (click)="changePage(1)" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
-       
+
       </a>
     </li>
   </ul>
