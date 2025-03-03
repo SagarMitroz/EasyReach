@@ -53,12 +53,12 @@ export const NavigationItems: NavigationItem[] = [
         breadcrumbs: false
       },
       {
-        id: 'user',
-        title: 'User',
+        id: 'assets',
+        title: 'Live Locations',
         type: 'item',
         classes: 'nav-item',
-        url: '/user',
-        icon: 'user',
+        url: '/assets',
+        icon: 'aim',
         breadcrumbs: false
       },
       {
@@ -71,23 +71,27 @@ export const NavigationItems: NavigationItem[] = [
         breadcrumbs: false
       },
       {
+        id: 'ble',
+        title: 'BLE',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/ble',
+        icon: 'ant-design',
+        breadcrumbs: false
+      },
+
+      
+      
+      {
         id: 'asset-list',
-        title: 'Assets List',
+        title: 'Assets Mapping',
         type: 'item',
         classes: 'nav-item',
         url: '/asset-list',
         icon: 'profile',
         breadcrumbs: false
       },
-      {
-        id: 'assets',
-        title: 'Live Locations',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/assets',
-        icon: 'aim',
-        breadcrumbs: false
-      },
+      
       {
         id: 'rule',
         title: 'Rule',
@@ -106,15 +110,7 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'signature',
         breadcrumbs: false
       },
-      {
-        id: 'ble',
-        title: 'BLE',
-        type: 'item',
-        classes: 'nav-item',
-        url: '/ble',
-        icon: 'ant-design',
-        breadcrumbs: false
-      },
+      
       {
         id: 'report',
         title: 'Report',
@@ -122,6 +118,15 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/report',
         icon: 'file-protect',
+        breadcrumbs: false
+      },
+      {
+        id: 'user',
+        title: 'User',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/user',
+        icon: 'user',
         breadcrumbs: false
       },
     ]

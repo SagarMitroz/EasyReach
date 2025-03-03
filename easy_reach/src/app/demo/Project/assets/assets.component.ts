@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-
+import { ToastService } from 'src/app/demo/Project/toast.service';
 
 @Component({
   selector: 'app-assets',
@@ -18,7 +18,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 export class AssetsComponent implements OnInit, OnChanges {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,public toastService: ToastService) {
 
     this.fetchCountries();
     this.fetchAreas();
@@ -26,6 +26,8 @@ export class AssetsComponent implements OnInit, OnChanges {
     this.fetchLocation();
   }
 
+
+  
 campusIdforS:number;
 locationIdforS:number;
 areaIdforS:number;
@@ -554,7 +556,7 @@ selectEvent3(locations: any) {
     } else if (minutes > 0) {
       return `${minutes} min<br>ago  `;
     } else {
-      return `just now`;
+      return `just<br>now`;
     }
   }
 

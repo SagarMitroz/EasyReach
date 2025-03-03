@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BleListComponent } from './ble-list/ble-list.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { Console } from 'console';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-ble',
@@ -54,7 +55,7 @@ selectedArea: any = null;
   private apiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/loc/list';
   private bearerToken = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhc3NldHRyYWNraW5nIiwic3ViIjoidm9kYWZvbmUiLCJyb2xlcyI6WyJBZG1pbiJdLCJleHAiOjE3NDIzMDcwMDAsImlhdCI6MTc0MDgwNzAwMH0.NkRItuKT4ILXrCl4YZNkhJjXe0iWbU4yLKvZ4ChpwEu2NEFFwadyj5ku0AoHUyHMTYNugVuVvwBFV7vPDQbwoQ'; // Replace with actual token
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,public toastService: ToastService) {
     // Load data from local storage on initialization
     const storedData = localStorage.getItem('formData');
     this.tableData = storedData ? JSON.parse(storedData) : [];
@@ -77,7 +78,7 @@ selectedArea: any = null;
 
       if (!this.scannerData.macAddress || this.scannerData.macAddress.trim() === '') {
         console.error('Mac Address is required.');
-        alert("All fields required")
+        this.toastService.showError('Please fill all fields!')
         return; // Stop form submission if macAddress is empty
       }
       formData = { 
@@ -100,6 +101,11 @@ selectedArea: any = null;
       this.scannerData = { firstName: '', lastName: '', macAddress: '', locationType: '' };
   
     } else if (tabName === 'Device') {
+      if (!this.deviceData.macAddress || this.deviceData.macAddress.trim() === '') {
+        console.error('Mac Address is required.');
+        this.toastService.showError('Please fill all fields!')
+        return; // Stop form submission if macAddress is empty
+      }
       formData = {
         macId: this.deviceData.macAddress,
         deviceName: this.deviceData.firstName,

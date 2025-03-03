@@ -40,7 +40,7 @@ export class LocationComponent {
      this.getDevices().subscribe({
       
        next: (data) => {
-         this.devices = data.response;
+         this.devices = data.response.reverse();
          
        },
        error: (err) => {

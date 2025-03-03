@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../toast.service';
 @Component({
   selector: 'app-add-location',
   standalone: true,
@@ -51,15 +52,18 @@ selectedArea: any = null;
   private capiUrl = 'https://docuquery.ai/assettracker/api/v1/c/u/bu/list';
   private bearerToken = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhc3NldHRyYWNraW5nIiwic3ViIjoidm9kYWZvbmUiLCJyb2xlcyI6WyJBZG1pbiJdLCJleHAiOjE3NDIzMDcwMDAsImlhdCI6MTc0MDgwNzAwMH0.NkRItuKT4ILXrCl4YZNkhJjXe0iWbU4yLKvZ4ChpwEu2NEFFwadyj5ku0AoHUyHMTYNugVuVvwBFV7vPDQbwoQ'; // Replace with actual token
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,public toastService: ToastService) {
     // Load data from local storage on initialization
     const storedData = localStorage.getItem('formData');
     this.tableData = storedData ? JSON.parse(storedData) : [];
     this.fetchCountries();
-    this.fetchAreas();
+    //this.fetchAreas();
     //this.fetchLocations();
   }
 
+
+
+  
   openPage(tabName: string) {
     this.activeTab = tabName;
   }
@@ -116,6 +120,12 @@ saveForm(tabName: string) {
   let apiUrl = ''; // Define API URL variable
 
   if (tabName === 'Area') {
+
+    if (!this.scannerData.locationType || this.scannerData.locationTag.trim() === ''|| this.scannerData.firstName.trim() === '') {
+     
+      this.toastService.showError('Please fill all fields!')
+      return; 
+    }
       formData = { 
           "parentId":this.selectedAreas,
           "businessUnit": {
@@ -135,6 +145,11 @@ saveForm(tabName: string) {
       this.scannerData = { firstName: '', lastName: '', locationType: '', locationTag: '' };
 
   } else if (tabName === 'Location') {
+    if (!this.deviceData.macAddress || this.deviceData.locationTag.trim() === ''|| this.deviceData.firstName.trim() === '') {
+     
+      this.toastService.showError('Please fill all fields!')
+      return; 
+    }
       formData = {
           "businessUnit": {
               "busUnitId": this.selectedCountry   
@@ -178,10 +193,10 @@ sendDataToApi(data: any, apiUrl: string) {
   this.http.post(apiUrl, data, { headers }).subscribe(
       (response) => {
           console.log('Data successfully sent to API:', response);
-          alert("Save successfully! ")
+          this.toastService.showSuccess('Successfully added!')
           this.locationAdded.emit();
           this.fetchCountries();
-          this.fetchAreas();
+         // this.fetchAreas();
       },
       (error) => {
           console.error('Error sending data to API:', error);
@@ -281,12 +296,15 @@ sendDataToApi(data: any, apiUrl: string) {
 
   
 
-  fetchAreas() {
+  fetchAreas(campid: number) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.bearerToken}`,
     });
+    const requestBody={
+      busUnitId:campid,
+    }
 
-    this.http.get<any>(this.areaApiUrl, { headers }).subscribe((response) => {
+    this.http.post<any>(this.areaApiUrl,requestBody,{ headers }).subscribe((response) => {
      
       if (response && response.response && Array.isArray(response.response)) {
         
@@ -324,6 +342,7 @@ sendDataToApi(data: any, apiUrl: string) {
   }
 
   selectEvent(country: any) {
+    this.fetchAreas(country.id);
     console.log(country);
     this.selectedCountry = country.id; // Store selected country
    

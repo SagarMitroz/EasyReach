@@ -182,3 +182,13 @@
 <div class="row">
   <app-ble-list />
 </div>
+
+
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+  <div *ngFor="let toast of toastService.toasts" class="toast show" [ngClass]="toast.classname">
+    <div class="toast-body">
+      {{ toast.message }}
+      <button type="button" class="btn-close ms-2 mb-1" (click)="toastService.removeToast(toast.message)"></button>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ToastService } from '../../toast.service';
 
 @Component({
   selector: 'app-ble-list',
@@ -32,7 +33,7 @@ pageSize: number = 10;
   loadDevices(): void {
     this.getDevices().subscribe({
       next: (data) => {
-        this.devices = data.response;
+        this.devices = data.response.reverse();
         console.log('Devices Loaded:', this.devices);
       },
       error: (err) => {
