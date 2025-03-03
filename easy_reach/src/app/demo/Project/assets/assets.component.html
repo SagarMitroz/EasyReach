@@ -20,7 +20,7 @@
             <label class="form-label text-start d-block text-light fw-bold" for="firstName">Campus</label>
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="countries" [searchKeyword]="keyword" placeholder="Select campus"
-                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'(inputCleared)='test($event)'
                 (inputFocused)='onFocused($event)'   [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
               </ng-autocomplete>
 
@@ -39,7 +39,7 @@
             <label class="form-label text-start d-block text-light fw-bold" for="firstName">Location</label>
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="locations" [searchKeyword]="keyword" placeholder="Select location"
-                (selected)='selectEvent3($event)' (inputChanged)='onChangeSearch3($event)'
+                (selected)='selectEvent3($event)' (inputChanged)='onChangeSearch3($event)' (inputCleared)='test1($event)'
                 (inputCleared)='($event)'
                 (inputFocused)='onFocused3($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
               </ng-autocomplete>
@@ -148,9 +148,9 @@
               <!-- Right part of the header -->
               <div class="header-right">
                 <div style="border-radius: 60%;background-color: white;height: 50px;width: 50px;padding-top: 4px;">
-                  <p style="margin-bottom: 0rem;font-size: 14px;color: black;">{{ getTimeSixHoursAgo(card.duration) }}
+                  <p style="margin-bottom: 0rem;font-size: 12px;color: grey;" [innerHTML]="timeAgo(card.duration)">
                   </p>
-                  <p style="font-size: 10px;margin-bottom: 0rem; color: black;">months</p>
+                  <!-- <p style="font-size: 10px;margin-bottom: 0rem; color: black;"></p> -->
                 </div>
               </div>
             </div>
@@ -161,8 +161,7 @@
               </div>
               <div class="col-md-9">
                 <div style="width: 115%;margin-left: 0px;background-color: white;border-radius: 5px;padding: 4px;">
-                  <p style="color: black;font-size: 0.7rem;margin-bottom: 0rem;">{{ card.updatedon | date:'h:mma
-                    dd/MM/yyyy' }} </p>
+                  <p style="color: black;font-size: 0.7rem;margin-bottom: 0rem;">{{ card.updatedon | date:'h:mmadd/MM/yyyy' }} </p>
                 </div>
               </div>
               <div class="col-md-3">

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
+
 @Component({
   selector: 'app-assets',
   standalone: true,
@@ -13,6 +14,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
   templateUrl: './assets.component.html',
   styleUrl: './assets.component.scss'
 })
+
+
 export class AssetsComponent implements OnInit, OnChanges {
 
   constructor(private http: HttpClient) {
@@ -25,7 +28,8 @@ export class AssetsComponent implements OnInit, OnChanges {
 
 campusIdforS:number;
 locationIdforS:number;
-
+areaIdforS:number;
+assetIdforS:number;
 
   
   selectedLocation: any = null;
@@ -94,8 +98,14 @@ selectedAssets: number = 0;
    * Fetches Total Assets (GET request).
    */
   loadTotalAssets(): void {
+
+   
+
     const requestBody={
-      assetId:this.locationIdforS,
+      assetId:this.assetIdforS,
+      locationId:this.locationIdforS,
+      areaId:this.areaIdforS,
+      busUnitId:this.campusIdforS,
     }
     this.getDevices(this.liveapiUrl, requestBody).subscribe({
       next: (data) => {
@@ -138,7 +148,10 @@ selectedAssets: number = 0;
   loadMissingAssets(): void {
      // Add necessary parameters if needed
 const requestBody={
-  assetId:this.locationIdforS,
+  assetId:this.assetIdforS,
+      locationId:this.locationIdforS,
+      areaId:this.areaIdforS,
+      busUnitId:this.campusIdforS,
 }
     this.postDevices(this.missingAssetUrl, requestBody).subscribe({
       next: (data) => {
@@ -302,18 +315,35 @@ const requestBody={
     });
   }
 
+
+  test($event: void) {
+    this.selectEvent(null); 
+
+    
+
+    }
+
+
+
   selectEvent(country: any) {
-    console.log(country);
-    this.selectedCountry = country.id; // Store selected country
+    // console.log(country);
+    // this.selectedCountry = country.id; // Store selected country
    
+
+    if (country) {
+      console.log(country);
+      this.selectedCountry = country.id; // Store selected asset ID
+    } else {
+      console.log(country);
+      this.selectedCountry = null; // Reset when cleared
+    }
      // Set lastName to selected country
   }
  
   
  
   
-   
-    
+ 
 
   onChangeSearch(search: string) {
     // fetch remote data from here
@@ -325,7 +355,6 @@ const requestBody={
   }
 
   selectEvent1(area: any) {
-    console.log(area);
     //  this.selectedAreas = area.id; // Store selected country
 
     
@@ -356,7 +385,7 @@ const requestBody={
   }
    
   test2($event: void) {
-    this.onChangeSearch1(null); 
+    this.selectEvent1(null); 
 
     
 
@@ -364,11 +393,7 @@ const requestBody={
 
 
    onChangeSearch1(search: string) {
-    console.log("Selection cleared, setting ID to 0");
-    if (search === '') { // User clicked 'X' to clear input
-      this.selectedAreas = 0; // Reset to 0
-      console.log("Selection cleared, setting ID to 0");
-    }
+    
    }
  
    onFocused1(e) {
@@ -458,12 +483,27 @@ selectEvent2(assets: any) {
     });
   }
   
+  test1($event: void) {
+    this.selectEvent3(null); 
 
+    
+
+    }
+    
 
 selectEvent3(locations: any) {
-   console.log(locations);
-    this.selectedAreas = locations.id; // Store selected country
+  //  console.log(locations);
+  //   this.selectedAreas = locations.id; // Store selected country
    
+
+  if (locations) {
+    console.log(locations);
+    this.selectedLocation = locations.id; // Store selected asset ID
+  } else {
+    console.log(locations);
+    this.selectedLocation = null; // Reset when cleared
+  }
+
  // Set lastName to selected country
   }
   
@@ -489,11 +529,37 @@ selectEvent3(locations: any) {
     
       areaId: this.selectedCountry,
       assetId: this.selectedAssets,
+      campus: this.selectedCountry,
+      location: this.selectedLocation,
     });
     this.campusIdforS= this.selectedCountry;
-     this.locationIdforS= this.selectedAssets
+     this.locationIdforS= this.selectedLocation
+     this.areaIdforS= this.selectedArea
+     this.assetIdforS= this.selectedAssets
      this.loadTotalAssets();
      this.loadMissingAssets();
   }
+
+
+
+
+
+  timeAgo(duration: string): string {
+    if (!duration) return '';
+
+    const [hours, minutes, seconds] = duration.split(':').map(Number);
+
+    if (hours > 0) {
+      return `${hours} h<br>ago `;
+    } else if (minutes > 0) {
+      return `${minutes} min<br>ago  `;
+    } else {
+      return `just now`;
+    }
+  }
+
+
+
+  
 }
 
